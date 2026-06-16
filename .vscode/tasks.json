@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "move pictures from pi",
+            "type": "shell",
+            "command": "set -a; source ${workspaceFolder}/.vscode/picam.env; rsync -av --remove-source-files -e \"ssh\" $PI_USER@$PI_HOST:~/picam/pictures/ ${workspaceFolder}/pictures/",
+            "problemMatcher": []
+        },
+        {
+            "label": "sync to pi",
+            "type": "shell",
+            "command": "set -a; source ${workspaceFolder}/.vscode/picam.env; rsync -av --delete --exclude='.*' --filter=':- .gitignore' -e \"ssh\" ${workspaceFolder}/ $PI_USER@$PI_HOST:~/picam/",
+            "problemMatcher": []
+        },
+        {
+            "label": "sync to pi and run picam",
+            "type": "shell",
+            "command": "set -a; source ${workspaceFolder}/.vscode/picam.env; rsync -av --delete --exclude='.*' --filter=':- .gitignore' -e \"ssh\" ${workspaceFolder}/ $PI_USER@$PI_HOST:~/picam/ && ssh $PI_USER@$PI_HOST '~/picam/.venv/bin/pip install -q ~/picam && ~/picam/.venv/bin/picam'",
+            "problemMatcher": []
+        },
+    ]
+}

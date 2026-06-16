@@ -1,0 +1,20 @@
+name: picam
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - c-compiler
+  - cxx-compiler
+  - python-prctl
+  - ruff
+  - ty
+  - pip
+  - pip:
+    - -e .
+    - lgpio
+    - munkres
+    - opencv-python-headless
+    - picamera2
+    - simplejpeg>=1.9.0
+    - smbus2
+    - st7789

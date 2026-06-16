@@ -1,0 +1,23 @@
+[[models]]
+name = "inputtensoronly"
+
+[[models]]
+name = "efficientnetv2_b2"
+task = "classification"
+
+[[models]]
+name = "yolo26n_pp"
+task = "object detection"
+labels = "coco_labels.txt"
+bbox_normalization = true
+bbox_order = "xy"
+ignore_dash_labels = true
+
+[[models]]
+name = "higherhrnet_coco"
+task = "pose estimation"
+
+[[models]]
+name = "deeplabv3plus"
+task = "segmentation"
+labels = "voc_labels.txt"

@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "picam"
+version = "0.1.0"
+license = { file = "LICENSE" }
+dependencies = [
+    "opencv-python-headless",
+    "munkres",
+    "simplejpeg>=1.9.0",  # overrides apt's 1.8.1 which is built against numpy 1.x
+    "st7789",
+]
+
+[project.scripts]
+picam = "picam.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+picam = ["labels/*", "models/*"]
+
+[tool.ty.environment]
+python = ".conda"
+
+[tool.ruff.lint]
+ignore = [
+    "ANN401",   # allow Any as a type annotation
+    "BLE001",   # allow broad exception catches
+    "CPY001",   # see license for copyright
+    "FURB140",  # prefer generator expressions to starmap
+    "PLC0415",  # allow lazy imports
+    "PLR0911",  # allow many return statements
+    "PLR0913",  # allow many function arguments
+    "PLW0717",  # allow many statements in try clauses
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/__init__.py" = ["D"]
+"src/displayhatmini/**" = ["FBT", "SLF001"]
