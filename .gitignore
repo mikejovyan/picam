@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Package build
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.conda/
+
+# Environment variables
+.vscode/*.env
+
+# Captured pictures
+pictures/
