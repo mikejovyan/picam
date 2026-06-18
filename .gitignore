@@ -9,7 +9,8 @@ dist/
 build/
 
 # Virtual environment
-.conda/
+.pixi/
+.venv/
 
 # Environment variables
 .vscode/*.env
