@@ -9,7 +9,6 @@ dist/
 build/
 
 # Virtual environment
-.pixi/
 .venv/
 
 # Environment variables

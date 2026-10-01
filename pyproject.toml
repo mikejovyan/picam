@@ -25,21 +25,6 @@ where = ["src"]
 [tool.setuptools.package-data]
 picam = ["labels/*", "models/*"]
 
-[tool.pixi.workspace]
-channels = ["conda-forge"]
-platforms = ["linux-64"]
-
-[tool.pixi.dependencies]
-c-compiler = "*"
-python = "3.11.*"
-python-prctl = "*"
-
-[tool.pixi.pypi-dependencies]
-picam = { path = ".", editable = true }
-
-[tool.ty.environment]
-python = ".pixi/envs/default"
-
 [tool.ruff.lint]
 ignore = [
     "ANN401",   # allow Any as a type annotation
