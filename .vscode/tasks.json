@@ -4,20 +4,26 @@
         {
             "label": "move pictures from pi",
             "type": "shell",
-            "command": "set -a; source ${workspaceFolder}/.vscode/picam.env; rsync -av --remove-source-files -e \"ssh\" $PI_USER@$PI_HOST:~/picam/pictures/ ${workspaceFolder}/pictures/",
+            "command": "${workspaceFolder}/.vscode/pull-pictures.sh",
             "problemMatcher": []
         },
         {
             "label": "sync to pi",
             "type": "shell",
-            "command": "set -a; source ${workspaceFolder}/.vscode/picam.env; rsync -av --delete --exclude='.*' --filter=':- .gitignore' -e \"ssh\" ${workspaceFolder}/ $PI_USER@$PI_HOST:~/picam/",
+            "command": "${workspaceFolder}/.vscode/sync-to-pi.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "run picam",
+            "type": "shell",
+            "command": "${workspaceFolder}/.vscode/run-on-pi.sh",
             "problemMatcher": []
         },
         {
             "label": "sync to pi and run picam",
-            "type": "shell",
-            "command": "set -a; source ${workspaceFolder}/.vscode/picam.env; rsync -av --delete --exclude='.*' --filter=':- .gitignore' -e \"ssh\" ${workspaceFolder}/ $PI_USER@$PI_HOST:~/picam/ && ssh $PI_USER@$PI_HOST '~/picam/.venv/bin/pip install -q ~/picam && ~/picam/.venv/bin/picam'",
+            "dependsOn": ["sync to pi", "run picam"],
+            "dependsOrder": "sequence",
             "problemMatcher": []
-        },
+        }
     ]
 }
