@@ -20,14 +20,25 @@ Follow the [official docs](https://www.raspberrypi.com/documentation/computers/g
 Update the system:
 
 ```shell
-sudo apt update
-sudo apt full-upgrade
+sudo apt update && sudo apt full-upgrade
 ```
 
-Enable SPI for the display:
+Enable I2C and SPI for the display and battery:
 
 ```shell
+sudo raspi-config nonint do_i2c 0
 sudo raspi-config nonint do_spi 0
+```
+
+Free up GPIO9, which SPI reserves as MISO but the display needs as its DC pin:
+
+```shell
+CONFIG=/boot/firmware/config.txt
+DEFAULT_SPI=dtparam=spi=
+OVERLAY_SPI=dtoverlay=spi0-2cs,no_miso
+
+sudo sed -i -e "s/^\([[:space:]]*$DEFAULT_SPI\)/#\1/" "$CONFIG"
+grep -q "^${OVERLAY_SPI%%,*}" "$CONFIG" || printf "%s\n" "$OVERLAY_SPI" | sudo tee -a "$CONFIG"
 ```
 
 Reboot:
@@ -38,34 +49,13 @@ sudo systemctl reboot
 
 ### Dependencies
 
-Install the AI camera firmware and model files:
+Install the system packages picam depends on:
 
 ```shell
-sudo apt install imx500-firmware imx500-models
-```
-
-Install the Python camera library without GUI dependencies:
-
-```shell
-sudo apt install python3-picamera2 --no-install-recommends
-```
-
-Install the I2C library for the battery monitor:
-
-```shell
-sudo apt install python3-smbus2
-```
-
-Install the GPIO library for the display and buttons:
-
-```shell
-sudo apt install python3-lgpio
-```
-
-Install git:
-
-```shell
-sudo apt install git
+sudo apt install --no-install-recommends \
+    imx500-firmware imx500-models \
+    python3-picamera2 python3-lgpio python3-smbus2 python3-munkres \
+    git
 ```
 
 ### Installation
@@ -88,44 +78,23 @@ Install the picam package:
 ~/picam/.venv/bin/pip install ~/picam
 ```
 
-Install simplejpeg 1.9.0 or later, which is required for compatibility with numpy 2.x:
-
-```shell
-~/picam/.venv/bin/pip install "simplejpeg>=1.9.0"
-```
-
 Enable linger so the user systemd service starts at boot without an active login session:
 
 ```shell
 loginctl enable-linger
 ```
 
-Create the systemd service `~/.config/systemd/user/picam.service`:
-
-```ini
-[Unit]
-Description=picam
-After=default.target
-
-[Service]
-ExecStart=%h/picam/.venv/bin/picam
-Restart=on-failure
-Environment=PYTHONUNBUFFERED=1
-
-[Install]
-WantedBy=default.target
-```
-
-Enable the service:
+Copy the systemd service file:
 
 ```shell
-systemctl --user daemon-reload && systemctl --user enable picam
+mkdir -p ~/.config/systemd/user
+cp ~/picam/picam.service ~/.config/systemd/user/picam.service
 ```
 
-Reboot:
+Enable and start the service:
 
 ```shell
-sudo systemctl reboot
+systemctl --user daemon-reload && systemctl --user enable --now picam
 ```
 
 ## Controls

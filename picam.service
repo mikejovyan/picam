@@ -1,0 +1,11 @@
+[Unit]
+Description=picam
+After=default.target
+
+[Service]
+ExecStart=%h/picam/.venv/bin/picam
+Restart=on-failure
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=default.target
