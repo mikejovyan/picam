@@ -89,3 +89,11 @@ systemctl --user daemon-reload && systemctl --user enable --now picam
 | B | Show/hide model info overlay |
 | X | Capture image (saved to `~/picam/pictures/`) |
 | Y | Exit |
+
+## Examples
+
+| | | |
+|---|---|---|
+| ![refrigerator 96%](examples/20251229_124636.jpg) | ![orange 98%](examples/20251229_124925.jpg) | ![banana 89%](examples/20251229_125002.jpg) |
+| ![ostrich 96%](examples/20251230_145734.jpg) | ![stingray 94%](examples/20251230_154342.jpg) | ![rugby ball 92%](examples/20251230_162309.jpg) |
+| ![fire engine 98%](examples/20251230_163013.jpg) | ![cello 77%](examples/20251230_164033.jpg) | |
