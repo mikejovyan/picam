@@ -1,7 +1,5 @@
 # picam
 
-[![license](https://img.shields.io/github/license/mikejovyan/picam)](LICENSE)
-
 Raspberry Pi AI camera for edge computer vision, with a small display and battery.
 
 ## Hardware
@@ -28,17 +26,6 @@ Enable I2C and SPI for the display and battery:
 ```shell
 sudo raspi-config nonint do_i2c 0
 sudo raspi-config nonint do_spi 0
-```
-
-Free up GPIO9, which SPI reserves as MISO but the display needs as its DC pin:
-
-```shell
-CONFIG=/boot/firmware/config.txt
-DEFAULT_SPI=dtparam=spi=
-OVERLAY_SPI=dtoverlay=spi0-2cs,no_miso
-
-sudo sed -i -e "s/^\([[:space:]]*$DEFAULT_SPI\)/#\1/" "$CONFIG"
-grep -q "^${OVERLAY_SPI%%,*}" "$CONFIG" || printf "%s\n" "$OVERLAY_SPI" | sudo tee -a "$CONFIG"
 ```
 
 Reboot:
