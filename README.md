@@ -39,10 +39,7 @@ sudo systemctl reboot
 Install the system packages picam depends on:
 
 ```shell
-sudo apt install --no-install-recommends \
-    imx500-firmware imx500-models \
-    python3-picamera2 python3-lgpio python3-smbus2 python3-munkres \
-    git
+sudo apt install git imx500-all python3-lgpio python3-munkres python3-picamera2 python3-smbus2 
 ```
 
 ### Installation
